@@ -7,6 +7,8 @@ import CountryDropdown from "./components/CountryDropdown";
 import StateDropdown from "./components/StateDropdown";
 import CityDropdown from "./components/CityDropdown";
 import PincodeDropdown from "./components/PincodeDropdown";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [countryId, setCountryId] = useState(null);
@@ -54,13 +56,25 @@ function App() {
     });
   };
   const handleSaveData = () => {
-    setTableList((prev) => [...prev, selectedData]);
-    setSelectedData({
-      country: "",
-      state: "",
-      city: "",
-      pincode: "",
-    });
+    if (!selectedData?.country) {
+      toast.error("Please select country");
+    } else if (!selectedData?.state) {
+      toast.error("Please select state");
+    } else if (!selectedData?.city) {
+      toast.error("Please select city");
+    } else if (!selectedData?.pincode) {
+      toast.error("Please select pincode");
+    } else {
+      setTableList((prev) => [...prev, selectedData]);
+
+      setSelectedData({
+        country: "",
+        state: "",
+        city: "",
+        pincode: "",
+      });
+      toast.success("Data saved successfully");
+    }
   };
   console.log(selectedData);
 
@@ -106,6 +120,7 @@ function App() {
           </tbody>
         </table>
       </div>
+      <ToastContainer autoClose={2000} hideProgressBar />
     </>
   );
 }
