@@ -3,6 +3,10 @@ import { useState } from "react";
 import "./App.css";
 import SelectComp from "./components/SelectComp";
 import { cities, countries, pincodes, states } from "./constants/constants";
+import CountryDropdown from "./components/CountryDropdown";
+import StateDropdown from "./components/StateDropdown";
+import CityDropdown from "./components/CityDropdown";
+import PincodeDropdown from "./components/PincodeDropdown";
 
 function App() {
   const [countryId, setCountryId] = useState(null);
@@ -15,48 +19,14 @@ function App() {
   };
   return (
     <>
-      <div>
-        <select onChange={handleChange}>
-          <option value="">Please select a country</option>
-
-          {countries?.map((item) => (
-            <option key={item?.countryId} value={item.countryId}>
-              {item?.name}
-            </option>
-          ))}
-        </select>
-        <select onChange={handleChange}>
-          <option value="">Please select a state</option>
-          {states
-            ?.filter((filterItem) => filterItem?.countryId == countryId)
-            ?.map((item) => (
-              <option key={item?.stateId} value={item?.stateId}>
-                {item?.name}
-              </option>
-            ))}
-        </select>
-
-        <select onChange={handleChange}>
-          <option value="">Please select a city</option>
-          {cities
-            ?.filter((filterItem) => filterItem?.stateId == stateId)
-            ?.map((item) => (
-              <option key={item?.cityId} value={item?.cityId}>
-                {item?.name}
-              </option>
-            ))}
-        </select>
-
-        <select onChange={handleChange}>
-          <option value="">Please select a pincodes</option>
-          {pincodes
-            ?.filter((filterItem) => filterItem?.cityId == cityId)
-            ?.map((item) => (
-              <option key={item?.pincodId} value={item?.pincodId}>
-                {item?.code}
-              </option>
-            ))}
-        </select>
+      <div className="w-full flex flex-col items-center gap-4 mt-10">
+        <h1 className="text-xl lg:text-3xl font-semibold">Multi Dropdown </h1>
+        <div className="flex flex-col lg:flex-row gap-4  ">
+          <CountryDropdown handleChange={handleChange} />
+          <StateDropdown handleChange={handleChange} countryId={countryId} />
+          <CityDropdown handleChange={handleChange} stateId={stateId} />
+          <PincodeDropdown handleChange={handleChange} cityId={cityId} />
+        </div>
       </div>
     </>
   );
