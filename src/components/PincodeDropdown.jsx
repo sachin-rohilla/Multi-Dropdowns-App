@@ -9,7 +9,7 @@ const PincodeDropdown = ({ handleChange, cityId }) => {
         className="border-2 px-4 py-2 rounded-lg shadow-md"
         onChange={handleChange}
       >
-        <option value="">Please select a pincodes</option>
+        <option value="">Please select a pincode</option>
         {pincodes
           ?.filter((filterItem) => filterItem?.cityId == cityId)
           ?.map((item) => (

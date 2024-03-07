@@ -12,21 +12,57 @@ function App() {
   const [countryId, setCountryId] = useState(null);
   const [stateId, setStateId] = useState(null);
   const [cityId, setCityId] = useState(null);
+  const [selectedData, setSelectedData] = useState({
+    country: "",
+    state: "",
+    city: "",
+    pincode: "",
+  });
+  const [tableList, setTableList] = useState([]);
   const handleCountryChange = (e) => {
+    const country = countries.find((item) => item.countryId == e.target.value);
+    setSelectedData({
+      ...selectedData,
+      country: country?.name,
+    });
     setCountryId(e.target.value);
     setStateId(null);
     setCityId(null);
   };
   const handleStateChange = (e) => {
+    const state = states.find((item) => item.stateId == e.target.value);
+    setSelectedData({
+      ...selectedData,
+      state: state?.name,
+    });
     setStateId(e.target.value);
     setCityId(null);
   };
   const handleCityChange = (e) => {
+    const city = cities.find((item) => item.cityId == e.target.value);
+    setSelectedData({
+      ...selectedData,
+      city: city?.name,
+    });
     setCityId(e.target.value);
   };
   const handlePincodeChange = (e) => {
-    console.log(e.target.value);
+    const pincode = pincodes.find((item) => item.pincodId == e.target.value);
+    setSelectedData({
+      ...selectedData,
+      pincode: pincode?.code,
+    });
   };
+  const handleSaveData = () => {
+    setTableList((prev) => [...prev, selectedData]);
+    setSelectedData({
+      country: "",
+      state: "",
+      city: "",
+      pincode: "",
+    });
+  };
+  console.log(selectedData);
 
   return (
     <>
@@ -41,6 +77,34 @@ function App() {
           <CityDropdown handleChange={handleCityChange} stateId={stateId} />
           <PincodeDropdown handleChange={handlePincodeChange} cityId={cityId} />
         </div>
+
+        <button
+          className="bg-yellow-400 text-white py-2 w-40 rounded-lg"
+          onClick={handleSaveData}
+        >
+          Save Selected Data
+        </button>
+
+        <table className="styled-table">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>State</th>
+              <th>City</th>
+              <th>PinCode</th>
+            </tr>
+          </thead>
+          <tbody>
+            {tableList?.map((item, index) => (
+              <tr key={index}>
+                <td>{item?.country || "N/A"}</td>
+                <td>{item?.state || "N/A"}</td>
+                <td>{item?.city || "N/A"}</td>
+                <td>{item?.pincode || "N/A"}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );
