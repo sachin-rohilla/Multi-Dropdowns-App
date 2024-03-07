@@ -66,7 +66,9 @@ function App() {
       toast.error("Please select pincode");
     } else {
       setTableList((prev) => [...prev, selectedData]);
-
+      setCountryId(null);
+      setStateId(null);
+      setCityId(null);
       setSelectedData({
         country: "",
         state: "",
@@ -76,7 +78,7 @@ function App() {
       toast.success("Data saved successfully");
     }
   };
-  console.log(selectedData);
+  console.log(selectedData, countryId);
 
   return (
     <>
@@ -109,14 +111,23 @@ function App() {
             </tr>
           </thead>
           <tbody>
-            {tableList?.map((item, index) => (
-              <tr key={index}>
-                <td>{item?.country || "N/A"}</td>
-                <td>{item?.state || "N/A"}</td>
-                <td>{item?.city || "N/A"}</td>
-                <td>{item?.pincode || "N/A"}</td>
+            {tableList?.length > 0 ? (
+              tableList?.map((item, index) => (
+                <tr key={index}>
+                  <td>{item?.country}</td>
+                  <td>{item?.state}</td>
+                  <td>{item?.city}</td>
+                  <td>{item?.pincode}</td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>N/A</td>
+                <td>N/A</td>
               </tr>
-            ))}
+            )}
           </tbody>
         </table>
       </div>

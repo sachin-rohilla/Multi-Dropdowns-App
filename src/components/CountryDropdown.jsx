@@ -2,7 +2,7 @@ import React from "react";
 import SelectComp from "./SelectComp";
 import { countries } from "../constants/constants";
 
-const CountryDropdown = ({ handleChange }) => {
+const CountryDropdown = ({ handleChange, countryId }) => {
   return (
     <div>
       <h1 className="text-center mb-1 font-semibold">Country</h1>
