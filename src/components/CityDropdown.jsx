@@ -14,7 +14,13 @@ const CityDropdown = ({ handleChange, stateId }) => {
         {cities
           ?.filter((filterItem) => filterItem?.stateId == stateId)
           ?.map((item) => (
-            <option key={item?.cityId} value={item?.cityId}>
+            <option
+              key={item?.cityId}
+              value={item?.cityId}
+              selected={cities.filter(
+                (filterItem) => filterItem?.cityId == item?.cityId
+              )}
+            >
               {item?.name}
             </option>
           ))}

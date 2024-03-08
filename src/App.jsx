@@ -1,7 +1,4 @@
 import { useState } from "react";
-
-import "./App.css";
-import SelectComp from "./components/SelectComp";
 import { cities, countries, pincodes, states } from "./constants/constants";
 import CountryDropdown from "./components/CountryDropdown";
 import StateDropdown from "./components/StateDropdown";
@@ -9,6 +6,9 @@ import CityDropdown from "./components/CityDropdown";
 import PincodeDropdown from "./components/PincodeDropdown";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdEdit } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import "./App.css";
 
 function App() {
   const [countryId, setCountryId] = useState(null);
@@ -65,7 +65,17 @@ function App() {
     } else if (!selectedData?.pincode) {
       toast.error("Please select pincode");
     } else {
-      setTableList((prev) => [...prev, selectedData]);
+      setTableList((prev) => [
+        ...prev,
+        {
+          countryId: countryId,
+          stateId: stateId,
+          cityId: cityId,
+          pincodeId: selectedData?.pincode,
+
+          ...selectedData,
+        },
+      ]);
       setCountryId(null);
       setStateId(null);
       setCityId(null);
@@ -78,7 +88,20 @@ function App() {
       toast.success("Data saved successfully");
     }
   };
-  console.log(selectedData, countryId);
+
+  const handleDelete = (id) => {
+    setTableList(
+      tableList?.filter((filterItem) => filterItem?.countryId !== id)
+    );
+    toast.success("Data deleted successfully");
+  };
+  const handleEdit = (data) => {
+    console.log(data, "ram");
+    setCountryId(data?.countryId);
+    setStateId(data?.stateId);
+    setCityId(data?.cityId);
+  };
+  console.log(selectedData, countryId, tableList);
 
   return (
     <>
@@ -108,28 +131,36 @@ function App() {
               <th>State</th>
               <th>City</th>
               <th>PinCode</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {tableList?.length > 0 ? (
+            {tableList?.length > 0 &&
               tableList?.map((item, index) => (
                 <tr key={index}>
                   <td>{item?.country}</td>
                   <td>{item?.state}</td>
                   <td>{item?.city}</td>
                   <td>{item?.pincode}</td>
+                  <td>
+                    <span className="flex items-center gap-2 justify-center">
+                      <MdEdit
+                        className="text-xl cursor-pointer"
+                        onClick={() => handleEdit(item)}
+                      />
+                      <MdDelete
+                        className="text-xl cursor-pointer"
+                        onClick={() => handleDelete(item?.countryId)}
+                      />
+                    </span>
+                  </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td>N/A</td>
-                <td>N/A</td>
-                <td>N/A</td>
-                <td>N/A</td>
-              </tr>
-            )}
+              ))}
           </tbody>
         </table>
+        {!tableList?.length && (
+          <h1 className="font-semibold">Data not available</h1>
+        )}
       </div>
       <ToastContainer autoClose={2000} hideProgressBar />
     </>
