@@ -14,13 +14,7 @@ const StateDropdown = ({ handleChange, countryId }) => {
         {states
           ?.filter((filterItem) => filterItem?.countryId == countryId)
           ?.map((item) => (
-            <option
-              key={item?.stateId}
-              value={item?.stateId}
-              selected={states?.filter(
-                (filterItem) => filterItem?.stateId == item?.stateId
-              )}
-            >
+            <option key={item?.stateId} value={item?.stateId}>
               {item?.name}
             </option>
           ))}

@@ -13,13 +13,7 @@ const PincodeDropdown = ({ handleChange, cityId }) => {
         {pincodes
           ?.filter((filterItem) => filterItem?.cityId == cityId)
           ?.map((item) => (
-            <option
-              key={item?.pincodId}
-              value={item?.pincodId}
-              selected={pincodes.filter(
-                (filterItem) => filterItem?.pincodId == item?.pincodId
-              )}
-            >
+            <option key={item?.pincodId} value={item?.pincodId}>
               {item?.code}
             </option>
           ))}

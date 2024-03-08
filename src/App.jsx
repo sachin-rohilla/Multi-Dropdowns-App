@@ -95,12 +95,7 @@ function App() {
     );
     toast.success("Data deleted successfully");
   };
-  const handleEdit = (data) => {
-    console.log(data, "ram");
-    setCountryId(data?.countryId);
-    setStateId(data?.stateId);
-    setCityId(data?.cityId);
-  };
+  const handleEdit = (data) => {};
   console.log(selectedData, countryId, tableList);
 
   return (
@@ -144,10 +139,10 @@ function App() {
                   <td>{item?.pincode}</td>
                   <td>
                     <span className="flex items-center gap-2 justify-center">
-                      <MdEdit
+                      {/* <MdEdit
                         className="text-xl cursor-pointer"
                         onClick={() => handleEdit(item)}
-                      />
+                      /> */}
                       <MdDelete
                         className="text-xl cursor-pointer"
                         onClick={() => handleDelete(item?.countryId)}
